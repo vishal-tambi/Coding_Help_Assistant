@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
+import ReactMarkdown from 'react-markdown';
 import OpenAI from "openai";
 const systemPrompt = `Welcome to the Interview Practice Site!
 
@@ -20,7 +21,6 @@ Your goal is to create a positive and productive learning experience, helping us
 `;
 
 
-// Define the POST function to handle requests
 export async function POST(req) {
     const genAI = new GoogleGenerativeAI(process.env.API_KEY);
     const model = genAI.getGenerativeModel({model: "gemini-1.5-flash"});
@@ -29,7 +29,6 @@ export async function POST(req) {
     
     const result = await model.generateContentStream(
         [systemPrompt, ...data]   
-        // This include the prompt by the system and teh message by the user
     );
 
     const stream = new ReadableStream({
@@ -43,7 +42,7 @@ export async function POST(req) {
                         const content = encoder.encode(chunkText);
                         controller.enqueue(content);
                     }
-                }
+                                }
             }
             catch (error){
                 console.error("Error:", error);
@@ -55,7 +54,6 @@ export async function POST(req) {
     });
 
     return new NextResponse(stream)
-    // it will return the stream as the response
 }
 
 
