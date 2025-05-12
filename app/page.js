@@ -39,6 +39,10 @@ export default function Home() {
       { role: "assistant", content: "" },
     ]);
 
+
+
+
+
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -78,10 +82,16 @@ export default function Home() {
     }
   };
 
+
+
+
+
   const messagesEndRef = useRef(null);
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+
 
   return (
     <Box
@@ -96,7 +106,7 @@ export default function Home() {
     >
       <Stack
         sx={{
-          width: isMobile ? "90%" : "450px",
+          width: isMobile ? "90%" : "850px",
           height: isMobile ? "80%" : "600px",
           background: "white",
           borderRadius: "16px",
@@ -105,11 +115,13 @@ export default function Home() {
           display: "flex",
         }}
       >
+
         <Divider sx={{ mb: 2 }} />
         <Stack
           sx={{ flexGrow: 1, overflowY: "auto", maxHeight: "100%" }}
           spacing={2}
         >
+
           {messages.map((msg, index) => (
             <Box key={index} display="flex" justifyContent={msg.role === "assistant" ? "flex-start" : "flex-end"}>
               <Box
